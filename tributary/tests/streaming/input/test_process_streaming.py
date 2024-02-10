@@ -13,13 +13,13 @@ vals = [
     "test_http_streaming.py",
     "test_input_streaming.py",
     "test_postgres_streaming.py",
-    "test_process.py",
+    "test_process_streaming.py",
     "test_sse_streaming.py",
 ]
 
 
 class TestProcess:
-    def setup(self):
+    def setup_method(self):
         time.sleep(0.5)
 
     @pytest.mark.skipif("'--cov=tributary' in sys.argv")

@@ -35,6 +35,7 @@ requires = [
     "beautifulsoup4>=4.9.1",
     "boltons>=20.1.0",
     "emails>=0.5.15",
+    "frozendict>=1.2",
     "future>=0.17.1",
     "gevent>=1.3.7",
     "graphviz>=0.10.1",
@@ -52,13 +53,15 @@ requires = [
 ]
 
 requires_dev = [
-    "black>=20.",
+    "black>=23",
+    "check-manifest",
     "flake8>=3.7.8",
     "flake8-black>=0.2.1",
     "mock",
     "pybind11>=2.4.0",
     "pytest>=4.3.0",
     "pytest-cov>=2.6.1",
+    "superstore",
     "Sphinx>=1.8.4",
     "sphinx-markdown-builder>=0.5.2",
 ] + requires
@@ -69,13 +72,14 @@ setup(
     description="Streaming reactive and dataflow graphs in Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/timkpaine/{name}".format(name=name),
+    url="https://github.com/streamlet-dev/{name}".format(name=name),
     author="Tim Paine",
     author_email="t.paine154@gmail.com",
     license="Apache 2.0",
     install_requires=requires,
     extras_require={
         "dev": requires_dev,
+        "develop": requires_dev,
         "functional": ["confluent-kafka>=0.11.6", "websocket_client>=0.57.0"],
     },
     classifiers=[

@@ -4,12 +4,12 @@ import time
 
 
 class TestPostgres:
-    def setup(self):
+    def setup_method(self):
         time.sleep(0.5)
 
     @pytest.mark.skipif("int(os.environ.get('TRIBUTARY_SKIP_DOCKER_TESTS', '1'))")
     def test_pg(self):
-        def foo():
+        def func():
             yield 1
             yield 2
             yield 3
@@ -18,7 +18,7 @@ class TestPostgres:
             return ["INSERT INTO test(col1) VALUES ({});".format(data)]
 
         out = ts.PostgresSink(
-            ts.Foo(foo),
+            ts.Func(func),
             query_parser=parser,
             user="postgres",
             database="postgres",

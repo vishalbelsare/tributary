@@ -8,7 +8,7 @@ sy.init_printing()
 
 
 class TestConfig:
-    def setup(self):
+    def setup_method(self):
         time.sleep(0.5)
 
     def test_construct_lazy(self):
@@ -18,7 +18,7 @@ class TestConfig:
         T = dte / 260.0
         N = syNormal("N", 0.0, 1.0)
 
-        d1 = (sy.ln(spot / strike) + (0.5 * vol ** 2) * T) / (vol * sy.sqrt(T))
+        d1 = (sy.ln(spot / strike) + (0.5 * vol**2) * T) / (vol * sy.sqrt(T))
         d2 = d1 - vol * sy.sqrt(T)
 
         TimeValueExpr = sy.exp(-rate * T) * (
@@ -44,7 +44,7 @@ class TestConfig:
         spot, strike, vol, dte, rate, cp = sy.symbols("spot strike vol dte rate cp")
         T = dte / 260.0
         N = syNormal("N", 0.0, 1.0)
-        d1 = (sy.ln(spot / strike) + (0.5 * vol ** 2) * T) / (vol * sy.sqrt(T))
+        d1 = (sy.ln(spot / strike) + (0.5 * vol**2) * T) / (vol * sy.sqrt(T))
         d2 = d1 - vol * sy.sqrt(T)
         TimeValueExpr = sy.exp(-rate * T) * (
             cp * spot * cdf(N)(cp * d1) - cp * strike * cdf(N)(cp * d2)
@@ -71,7 +71,7 @@ class TestConfig:
         T = dte / 260.0
         N = syNormal("N", 0.0, 1.0)
 
-        d1 = (sy.ln(spot / strike) + (0.5 * vol ** 2) * T) / (vol * sy.sqrt(T))
+        d1 = (sy.ln(spot / strike) + (0.5 * vol**2) * T) / (vol * sy.sqrt(T))
         d2 = d1 - vol * sy.sqrt(T)
 
         TimeValueExpr = sy.exp(-rate * T) * (
@@ -89,7 +89,7 @@ class TestConfig:
         price = PriceClass(
             spot=tss.Const(210.59),
             #    strike=tss.Print(tss.Const(205), text='strike'),
-            strike=tss.Foo(strikes, interval=1),
+            strike=tss.Func(strikes, interval=1),
             vol=tss.Const(14.04),
             dte=tss.Const(4),
             rate=tss.Const(0.2175),

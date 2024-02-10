@@ -1,8 +1,8 @@
 import json as JSON
-from .input import Foo
+from .input import Func
 
 
-class Kafka(Foo):
+class Kafka(Func):
     """Connect to kafka server and yield back results
 
     Args:
@@ -40,7 +40,6 @@ class Kafka(Foo):
             interval=interval,
         ):
             if self._consumer is None:
-
                 self._consumer = AIOKafkaConsumer(
                     *topics,
                     bootstrap_servers=servers,
@@ -64,5 +63,5 @@ class Kafka(Foo):
             # Will leave consumer group; perform autocommit if enabled.
             await self._consumer.stop()
 
-        super().__init__(foo=_listen)
+        super().__init__(func=_listen)
         self._name = "Kafka"
