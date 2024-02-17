@@ -31,24 +31,24 @@ def _either_type(f):
 def LazyToStreaming(lazy_node):
     from .base import TributaryException
     from .lazy import LazyNode
-    from .streaming import Foo, StreamingNode
+    from .streaming import Func, StreamingNode
 
     if isinstance(lazy_node, StreamingNode):
         return lazy_node
     if not isinstance(lazy_node, LazyNode):
         raise TributaryException("Malformed input:{}".format(lazy_node))
 
-    return Foo(foo=lambda node=lazy_node: node())
+    return Func(func=lambda node=lazy_node: node())
 
 
 def _compare(new_value, old_value):
     """return true if value is new, otherwise false"""
-    if isinstance(new_value, (int, float)) and type(new_value) == type(old_value):
+    if isinstance(new_value, (int, float)) and type(new_value) is type(old_value):
         # if numeric, compare within a threshold
         # TODO
         return abs(new_value - old_value) > 0.00001
 
-    elif type(new_value) != type(old_value):
+    elif type(new_value) is not type(old_value):
         return True
 
     elif isinstance(new_value, (pd.DataFrame, pd.Series, np.ndarray)) or isinstance(
@@ -76,14 +76,14 @@ def anext(obj):
     return obj.__anext__()
 
 
-def _gen_to_foo(generator):
+def _gen_to_func(generator):
     try:
         return next(generator)
     except StopIteration:
         return StreamEnd()
 
 
-async def _agen_to_foo(generator):
+async def _agen_to_func(generator):
     try:
         return await anext(generator)
     except StopAsyncIteration:
@@ -91,7 +91,7 @@ async def _agen_to_foo(generator):
 
 
 def _gen_node(n):
-    from .streaming import Const, Foo
+    from .streaming import Const, Func
     from .lazy import Node as LazyNode
     from .streaming import Node as StreamingNode
 
@@ -100,7 +100,7 @@ def _gen_node(n):
     elif isinstance(n, LazyNode):
         return LazyToStreaming(n)
     elif callable(n):
-        return Foo(n, name="Callable")
+        return Func(n, name="Callable")
     return Const(n)
 
 
